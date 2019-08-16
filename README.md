@@ -1,2 +1,3 @@
 # Inject
-Simple Dependency Injection in Swift
+
+A description of this package.
