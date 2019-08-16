@@ -23,8 +23,8 @@ public class Container {
 		for resolver in resolvers {
 			if let resolved: T = resolver.resolve() {
 
-				(resolver as? Component)?.onResolved()
-				
+				(resolved as? Component)?.onResolved()
+
 				return resolved
 			}
 		}
