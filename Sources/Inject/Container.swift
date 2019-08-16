@@ -22,6 +22,9 @@ public class Container {
 	public func resolve<T>() -> T {
 		for resolver in resolvers {
 			if let resolved: T = resolver.resolve() {
+
+				(resolver as? Component)?.onResolved()
+				
 				return resolved
 			}
 		}

@@ -13,6 +13,7 @@ public protocol Component {
 	init()
 
 	static func getResolver() -> Resolver
+	func onResolved()
 }
 
 public protocol Singleton {}
@@ -21,6 +22,10 @@ public protocol Singleton {}
 public extension Component {
 	static func getResolver() -> Resolver {
 		return InstanceResolver<Self>()
+	}
+
+	func onResolved() {
+		
 	}
 }
 

@@ -9,11 +9,12 @@
 import Foundation
 import Inject
 
-protocol Math {
+
+protocol Math: Component {
 	func computation(_ first: Int, _ second: Int) -> Int
 }
 
-class Addition: Math, Component {
+class Addition: Math {
 	required init() { }
 
 	func computation(_ first: Int, _ second: Int) -> Int {
@@ -21,7 +22,7 @@ class Addition: Math, Component {
 	}
 }
 
-class Subtraction: Math, Component {
+class Subtraction: Math {
 	func computation(_ first: Int, _ second: Int) -> Int {
 		first - second
 	}
@@ -48,7 +49,7 @@ protocol Settings {
 
 class SettingsComponent: Component, Singleton, Settings {
 	required init() {}
-	
+
 	var name: String = "\(Int.random(in: 0...10000))"
 }
 class SecondController {

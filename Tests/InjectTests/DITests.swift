@@ -8,7 +8,6 @@
 
 import XCTest
 import Inject
-import GitLab
 
 
 
