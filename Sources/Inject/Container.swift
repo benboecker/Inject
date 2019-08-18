@@ -9,9 +9,9 @@
 import Foundation
 
 public class Container {
-	public static let `default` = Container()
-
 	private var resolvers: [Resolver] = []
+
+	public static let `default` = Container()
 
 	public func register(_ types: Component.Type...) {
 		for type in types {
@@ -30,6 +30,10 @@ public class Container {
 		}
 
 		fatalError("Could not find a component for '\(T.self)', registered components are: \(resolvers.map { $0 })")
+	}
+
+	public func unregisterAll() {
+		resolvers.removeAll()
 	}
 }
 
