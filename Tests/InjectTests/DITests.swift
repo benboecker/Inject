@@ -19,9 +19,7 @@ class DITests: XCTestCase {
 		let controller = Controller()
 
 		XCTAssertEqual(controller.compute(), 8)
-
-
-
+		
 	}
 
 

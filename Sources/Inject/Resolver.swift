@@ -9,7 +9,7 @@
 import Foundation
 
 
-public protocol Resolver {
+protocol Resolver {
 	func resolve<T>() -> T?
 }
 

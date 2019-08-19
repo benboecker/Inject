@@ -10,7 +10,7 @@ import Foundation
 
 
 class SingletonResolver<InstanceType: Component>: Resolver {
-	public func resolve<T>() -> T? {
+	func resolve<T>() -> T? {
 		return InstancePool.shared.getInstance(InstanceType.self) as? T
 	}
 }

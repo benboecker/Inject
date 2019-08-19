@@ -8,7 +8,7 @@
 import Foundation
 
 class InstanceResolver<InstanceType: Component>: Resolver {
-	public func resolve<T>() -> T? {
+	func resolve<T>() -> T? {
 		return InstanceType.init() as? T
 	}
 }

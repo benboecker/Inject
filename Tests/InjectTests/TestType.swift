@@ -35,6 +35,8 @@ class Controller {
 	@Inject var math: Math
 
 	func compute() -> Int {
+
+		
 		return math.computation(5, 3)
 	}
 }
@@ -43,11 +45,11 @@ class Controller {
 
 
 
-protocol Settings {
+protocol Settings: Component, Singleton {
 	var name: String { get }
 }
 
-class SettingsComponent: Component, Singleton, Settings {
+class SettingsComponent: Settings {
 	required init() {}
 
 	var name: String = "\(Int.random(in: 0...10000))"

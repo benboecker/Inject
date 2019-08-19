@@ -11,12 +11,16 @@ import Foundation
 
 @propertyWrapper
 public class Inject<T> {
-	private lazy var component: T = { Container.default.resolve() }()
+	private lazy var component: T = {
+		Container.default.resolve()
+	}()
 
 	public init() {}
 
 	public var wrappedValue: T {
-		get { component }
+		get {
+			component
+		}
 		set { component = newValue }
 	}
 }

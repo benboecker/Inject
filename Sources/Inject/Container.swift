@@ -10,16 +10,27 @@ import Foundation
 
 public class Container {
 	private var resolvers: [Resolver] = []
-
 	public static let `default` = Container()
+}
 
-	public func register(_ types: Component.Type...) {
+public extension Container {
+	func register(_ types: Component.Type...) {
 		for type in types {
-			resolvers.append(type.getResolver())
+			if type is Singleton.Type {
+				resolvers.append(type.getSingletonResolver())
+			} else {
+				resolvers.append(type.getResolver())
+			}
 		}
 	}
 
-	public func resolve<T>() -> T {
+	func unregisterAll() {
+		resolvers.removeAll()
+	}
+}
+
+extension Container {
+	func resolve<T>() -> T {
 		for resolver in resolvers {
 			if let resolved: T = resolver.resolve() {
 
@@ -32,9 +43,6 @@ public class Container {
 		fatalError("Could not find a component for '\(T.self)', registered components are: \(resolvers.map { $0 })")
 	}
 
-	public func unregisterAll() {
-		resolvers.removeAll()
-	}
 }
 
 
