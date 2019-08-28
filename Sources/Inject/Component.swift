@@ -18,9 +18,17 @@ public protocol Component {
 	*/
 	init()
 
+	/**
+	Callback for additional setup after the components gets resolved.
+	*/
 	func onResolved()
 }
 
+/**
+Indicates whether a component gets resolved as a singleton.
+
+When a component additionally conforms to the Singleton protocol, only one instance of this component gets created and alsways reused.
+*/
 public protocol Singleton {}
 
 extension Component {
