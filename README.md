@@ -1,8 +1,4 @@
 # Inject
-#Dev Diary/Swift#
-- - - -
-
-# Inject
 > Dependency Injection using Swift 5.1 Property Wrappers  
 
 This project is based on the ideas and concepts of the [Wind Framework](https://github.com/palasthotel/wind), which provides a much more detailed and comprehensive solution for dependency injection. **Inject** is meant to be a lightweight alternative for smaller apps.
