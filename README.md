@@ -5,15 +5,15 @@
 # Inject
 > Dependency Injection using Swift 5.1 Property Wrappers  
 
-This project is based on the [Wind Framework](https://github.com/palasthotel/wind), which provides a much more detailed and comprehensive solution for dependency injection. *Inject* is meant to be a lightweight alternative for smaller apps.
+This project is based on the ideas and concepts of the [Wind Framework](https://github.com/palasthotel/wind), which provides a much more detailed and comprehensive solution for dependency injection. **Inject** is meant to be a lightweight alternative for smaller apps.
 
 - - - -
 
 ## How does it work?
-The concept of dependency injection takes a centralised approach with a container object that is responsible for initialising different components of an app that depend on other components (and providing these as well). By using protocols to declare dependencies and registering concrete types in the container, the components are decoupled from one another. This results in a more structured and testable architecture.
+The concept of dependency injection takes a centralised approach with a container object that is responsible for initialising different components of an app that depend on other components (and providing them as well). By using protocols to declare dependencies and registering concrete types in the container, the components and their dependencies are decoupled from one another. This results in a more structured and testable architecture.
 
 ## How can I get it?
-Using the Swift Package Manager, you can add the repository to your Xcode project as an external dependency. To integrate *Inject* into your Xcode project using Xcode 11, specify it in `Project > Swift Packages`:
+Using the Swift Package Manager, you can add the repository to your Xcode project as an external dependency. To integrate **Inject** into your Xcode project using Xcode 11, specify it in `Project > Swift Packages`:
 
 `https://github.com/ivanvorobei/SPStorkController`
 
