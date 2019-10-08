@@ -3,8 +3,6 @@
 
 This project is based on the ideas and concepts of the [Wind Framework](https://github.com/palasthotel/wind), which provides a much more detailed and comprehensive solution for dependency injection. **Inject** is meant to be a lightweight alternative for smaller apps.
 
-- - - -
-
 ## How does it work?
 The concept of dependency injection takes a centralised approach with a container object that is responsible for initialising different components of an app that depend on other components (and providing them as well). By using protocols to declare dependencies and registering concrete types in the container, the components and their dependencies are decoupled from one another. This results in a more structured and testable architecture.
 
@@ -28,7 +26,7 @@ A simple component could look like this:
 
 ```swift
 struct Settings: Component {
-	var apiToken = "abc123"
+    var apiToken = "abc123"
 }
 ```
 
@@ -44,7 +42,7 @@ To actually use the component, the `@Inject` property wrapper is used while decl
 
 ```swift
 struct API {
-	@Inject var settings: Settings
+    @Inject var settings: Settings
 }
 ```
 
@@ -61,7 +59,7 @@ The API token is defined as a protocol.
 
 ```swift
 protocol Token: Component {
-	var value: String { get }
+    var value: String { get }
 }
 ```
 
@@ -71,7 +69,7 @@ The `Token` protocol is used by the `API` struct by declaring a token with the `
 
 ```swift
 struct API {
-	@Inject token: Token
+    @Inject token: Token
 }
 ```
 
@@ -79,7 +77,7 @@ The concrete implementation of the `Token` in the app looks like this.
 
 ```swift
 struct ProductionToken: Token {
-	var value: String
+    var value: String
 }
 ```
 
@@ -93,10 +91,10 @@ In a unit test for the API struct, the token can be mocked with another implemen
 
 ```swift
 struct TestToken: Token {
-	var value: String {
-		get { "TESTTOKEN" }
-		set { }
-	}
+    var value: String {
+        get { "TESTTOKEN" }
+        set { }
+    }
 }
 ```
 
@@ -105,11 +103,11 @@ In the test case we register not the production token from the app, but the `Tes
 ```swift
 class APITests: XCTestCase {
     func testToken() {
-		Container.default.register(TestToken.self)
-		let api = API()
+        Container.default.register(TestToken.self)
+        let api = API()
 
-		XCTAssertEqual(api.token.value, "TESTTOKEN")
-	}
+        XCTAssertEqual(api.token.value, "TESTTOKEN")
+    }
 }
 ```
 
