@@ -42,8 +42,9 @@ extension Component {
 }
 
 public extension Component {
-	func onResolved() {
-		
-	}
+	/**
+	Default implementation of the `onResolved()` method. Does nothing, but may be overriden by custom components.
+	*/
+	func onResolved() { }
 }
 
