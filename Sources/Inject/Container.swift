@@ -8,6 +8,10 @@
 
 import Foundation
 
+
+
+
+
 /**
 The main *Dependency Injection* `Container` class. Is used to register Components that can then be used with the `@Inject` keyword.
 Currently there is only one container supported, the one accessed via the static `default` property.
@@ -54,23 +58,45 @@ public extension Container {
 		}
 	}
 
+	
+	/**
+	This method simply removes all registered resolvers. It's main purpose is to be used in unit tests where you need this specific behaviour to reset state.
+	*/
 	func unregisterAll() {
 		resolvers.removeAll()
 	}
+	
+	/**
+	This method provides direct resolution of registered dependencies, bypassing the `@Inject` property wrapper.
+	
+	Often you just register one Component for a given type, but the `Container` type allows you to register more than one component of the same type. With this method you can get all implementations of that type.
+	
+	- Returns: An array of the resolved dependencies of type `T`.
+	*/
+	func resolveDependencies<T>() -> [T] {
+		var resolvedDependencies: [T] = []
+		
+		for resolver in resolvers {
+			if let dependency: T = resolver.resolve() {
+				(dependency as? Component)?.onResolved()
+				resolvedDependencies.append(dependency)
+			}
+		}
+		
+		return resolvedDependencies
+	}
+		
 }
 
 extension Container {
 	func resolve<T>() -> T {
-		for resolver in resolvers {
-			if let resolved: T = resolver.resolve() {
-
-				(resolved as? Component)?.onResolved()
-
-				return resolved
-			}
+		let dependencies: [T] = resolveDependencies()
+		
+		guard let dependency = dependencies.first else {
+			fatalError("Could not find a component for '\(T.self)', registered components are: \(resolvers.map { $0 })")
 		}
-
-		fatalError("Could not find a component for '\(T.self)', registered components are: \(resolvers.map { $0 })")
+		
+		return dependency
 	}
 
 }

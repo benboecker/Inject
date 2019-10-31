@@ -55,4 +55,10 @@ class DITests: XCTestCase {
 
 		XCTAssertEqual(nestedController.a.b.c.value, "Test")
 	}
+	
+	override func tearDown() {
+		super.tearDown()
+		
+		Container.default.unregisterAll()
+	}
 }

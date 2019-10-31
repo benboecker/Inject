@@ -111,4 +111,6 @@ class APITests: XCTestCase {
 }
 ```
 
+### Direct resolution of dependencies
+The `Container` type allows you to resolve depencies directly, via the `resolveDependencies<T>()` method. It returns an array of all registered components for a given type, since it is possible to register multiple components to a type.
 

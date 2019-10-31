@@ -10,34 +10,12 @@ import Foundation
 import Inject
 
 
-protocol Math: Component {
-	func computation(_ first: Int, _ second: Int) -> Int
-}
-
-class Addition: Math {
-	required init() { }
-
-	func computation(_ first: Int, _ second: Int) -> Int {
-		return first + second
-	}
-}
-
-class Subtraction: Math {
-	func computation(_ first: Int, _ second: Int) -> Int {
-		first - second
-	}
-
-	required init() {}
-}
-
 
 class Controller {
-	@Inject var math: Math
+	@Inject var calculation: IntegerCalculation
 
 	func compute() -> Int {
-
-		
-		return math.computation(5, 3)
+		return calculation.compute([5, 3])
 	}
 }
 
