@@ -9,7 +9,7 @@ The concept of dependency injection takes a centralised approach with a containe
 ## How can I get it?
 Using the Swift Package Manager, you can add the repository to your Xcode project as an external dependency. To integrate **Inject** into your Xcode project using Xcode 11, specify it in `Project > Swift Packages`:
 
-`https://github.com/ivanvorobei/SPStorkController`
+`https://github.com/benboecker/Inject.git`
 
 Alternatively, you can download the repository and include the files manually. This way, you will not get updates to the project.
 
