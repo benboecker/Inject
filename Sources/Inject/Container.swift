@@ -85,6 +85,18 @@ public extension Container {
 		
 		return resolvedDependencies
 	}
+	
+	/**
+	This method provides direct resolution of registered dependencies, bypassing the `@Inject` property wrapper.
+	
+	Often you just register one Component for a given type, but the `Container` type allows you to register more than one component of the same type. With this method you can get the first implementation of that type.
+	
+	- Returns: A initialised component of the resolved dependencies of type `T?`. returns `nil` if no such component is registered.
+	*/
+	func resolveDependencies<T>() -> T? {
+		let resolvedDependencies: [T] = resolveDependencies()
+		return resolvedDependencies.first
+	}
 		
 }
 
