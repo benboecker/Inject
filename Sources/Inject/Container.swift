@@ -58,12 +58,12 @@ public extension Container {
 		}
 	}
 
-	
 	/**
 	This method simply removes all registered resolvers. It's main purpose is to be used in unit tests where you need this specific behaviour to reset state.
 	*/
 	func unregisterAll() {
 		resolvers.removeAll()
+		InstancePool.shared.instances = []
 	}
 	
 	/**
