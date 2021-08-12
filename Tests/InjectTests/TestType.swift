@@ -23,11 +23,14 @@ class Controller {
 
 
 
-protocol Settings: Component, Singleton {
+protocol Settings: Singleton {
 	var name: String { get }
 }
 
-class SettingsComponent: Settings {
+final class SettingsComponent: Settings {
+	
+	static let shared = SettingsComponent()
+	
 	required init() {}
 
 	var name: String = "\(Int.random(in: 0...10000))"

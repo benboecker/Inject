@@ -49,21 +49,27 @@ public extension Container {
 	    - types: The types to register in the container. Must conform to the `Component` protocol.
 	*/
 	func register(_ types: Component.Type...) {
-		for type in types {
-			if type is Singleton.Type {
-				resolvers.append(type.getSingletonResolver())
-			} else {
-				resolvers.append(type.getResolver())
-			}
+		for type in types {			
+			let resolver = type.getResolver()
+			resolvers.append(resolver)
 		}
 	}
 
+	//	func unregister<T: Component>(_ type: T) {
+//		resolvers.removeAll { resolver in
+//			if let _: T = resolver.resolve() {
+//				return true
+//			} else {
+//				return false
+//			}
+//		}
+//	}
+	
 	/**
 	This method simply removes all registered resolvers. It's main purpose is to be used in unit tests where you need this specific behaviour to reset state.
 	*/
 	func unregisterAll() {
 		resolvers.removeAll()
-		InstancePool.shared.instances = []
 	}
 	
 	/**
@@ -87,13 +93,14 @@ public extension Container {
 	}
 	
 	/**
-	This method provides direct resolution of registered dependencies, bypassing the `@Inject` property wrapper.
+	This method provides direct resolution of a registered dependency, bypassing the `@Inject` property wrapper.
 	
 	Often you just register one Component for a given type, but the `Container` type allows you to register more than one component of the same type. With this method you can get the first implementation of that type.
+	Also this method does not crash if the dependency is not found, but rather returns an optional instead.
 	
 	- Returns: A initialised component of the resolved dependencies of type `T?`. returns `nil` if no such component is registered.
 	*/
-	func resolveDependencies<T>() -> T? {
+	func resolveDependency<T>() -> T? {
 		let resolvedDependencies: [T] = resolveDependencies()
 		return resolvedDependencies.first
 	}

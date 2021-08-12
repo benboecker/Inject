@@ -7,8 +7,9 @@
 
 import Foundation
 
-class InstanceResolver<InstanceType: Component>: Resolver {
+class InstanceResolver<U: Component>: Resolver {
 	func resolve<T>() -> T? {
-		return InstanceType.init() as? T
+		return U.init() as? T
 	}
 }
+

@@ -21,11 +21,15 @@ struct Addition: IntegerCalculation {
 
 struct Subtraction: IntegerCalculation {
 	func compute(_ numbers: [Int]) -> Int {
-		guard !numbers.isEmpty else { return 0 }
-		print("\(numbers[0]) - ")
-		let n = numbers[0] - compute(Array(numbers[1...]))
-		print(n)
-		return n
+		guard !numbers.isEmpty,
+			  let n = numbers.first
+			  
+		else { return 0 }
+		
+		let remainingNumbers = numbers.dropFirst()
+		let subractor = remainingNumbers.reduce(0, +)
+				
+		return n - subractor
 	}
 }
 

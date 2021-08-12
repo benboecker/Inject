@@ -33,15 +33,15 @@ class MultipleComponentResolutionTests: XCTestCase {
 		let dependencies: [IntegerCalculation] = Container.default.resolveDependencies()
 		XCTAssertEqual(dependencies.count, 4)
 		
-		let addition = dependencies.first { $0 is Addition }
-		let subtraction = dependencies.first { $0 is Subtraction }
-		let multiplication = dependencies.first { $0 is Multiplication }
-		let fixed = dependencies.first { $0 is Fixed }
+		guard let addition: Addition = Container.default.resolveDependency() else { XCTFail(); return }
+		guard let subtraction: Subtraction = Container.default.resolveDependency() else { XCTFail(); return }
+		guard let multiplication: Multiplication = Container.default.resolveDependency() else { XCTFail(); return }
+		guard let fixed: Fixed = Container.default.resolveDependency() else { XCTFail(); return }
 		
-		XCTAssertEqual(addition?.compute([10, 30, 50]), 90)
-		XCTAssertEqual(subtraction?.compute([100, 30, 50]), 20)
-		XCTAssertEqual(multiplication?.compute([3, 4, 6]), 72)
-		XCTAssertEqual(fixed?.compute([100, 30, 50]), 10)
+		XCTAssertEqual(addition.compute([10, 30, 50]), 90)
+		XCTAssertEqual(subtraction.compute([100, 30, 50]), 20)
+		XCTAssertEqual(multiplication.compute([3, 4, 6]), 72)
+		XCTAssertEqual(fixed.compute([100, 30, 50]), 10)
 		
 	}
 	

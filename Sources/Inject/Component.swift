@@ -22,23 +22,32 @@ public protocol Component {
 	Callback for additional setup after the components gets resolved.
 	*/
 	func onResolved()
+	
+	/// This function is used internally to get a resolver from a component. A default implementation is provided and this function does not have to be implemented by the concrete type.
+	static func getResolver() -> Resolver
 }
 
 /**
 Indicates whether a component gets resolved as a singleton.
 
-When a component additionally conforms to the Singleton protocol, only one instance of this component gets created and alsways reused.
+When a component conforms to the Singleton protocol, only one instance of this component gets created and is always reused.
+Must be a final class.
 */
-public protocol Singleton {}
+public protocol Singleton: Component, AnyObject {
+	static var shared: Self { get }
+}
 
-extension Component {
-	static func getSingletonResolver() -> Resolver {
-		return SingletonResolver<Self>()
-	}
-
+public extension Component {
 	static func getResolver() -> Resolver {
 		return InstanceResolver<Self>()
 	}
+}
+
+public extension Singleton {
+	static func getResolver() -> Resolver {
+		return SingletonResolver<Self>()
+	}
+
 }
 
 public extension Component {

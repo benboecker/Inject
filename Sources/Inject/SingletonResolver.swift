@@ -9,8 +9,8 @@ import Foundation
 
 
 
-class SingletonResolver<InstanceType: Component>: Resolver {
+class SingletonResolver<U: Singleton>: Resolver {
 	func resolve<T>() -> T? {
-		return InstancePool.shared.getInstance(InstanceType.self) as? T
+		U.shared as? T
 	}
 }
