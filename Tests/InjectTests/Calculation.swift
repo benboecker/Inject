@@ -9,7 +9,7 @@ import Foundation
 import Inject
 
 
-protocol IntegerCalculation: Component {
+protocol IntegerCalculation {
 	func compute(_ numbers: [Int]) -> Int
 }
 
