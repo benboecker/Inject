@@ -9,8 +9,12 @@
 import Foundation
 
 
-public protocol Resolver {
-	func resolve<T>() -> T?
+protocol Resolver {
+	var resolve: () -> Any { get }
+	var identifier: ObjectIdentifier { get }
+	
+	init<C>(_ resolving: @escaping () -> C)
+	
 }
 
 

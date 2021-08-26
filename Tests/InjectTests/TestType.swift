@@ -23,7 +23,7 @@ class Controller {
 
 
 
-protocol Settings: Singleton {
+protocol Settings {
 	var name: String { get }
 }
 
@@ -41,15 +41,15 @@ class SecondController {
 
 
 
-struct A: Component {
+struct A {
 	@Inject var b: B
 }
 
-struct B: Component {
+struct B {
 	@Inject var c: C
 }
 
-struct C: Component {
+struct C {
 	let value = "Test"
 }
 
@@ -59,7 +59,7 @@ struct NestedController {
 
 
 
-struct SimpleComponent: Component {
+struct SimpleComponent {
 	var name = "Test"
 }
 struct SimpleController {

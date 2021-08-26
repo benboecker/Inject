@@ -12,112 +12,39 @@ import Foundation
 
 
 
-/**
-The main *Dependency Injection* `Container` class. Is used to register Components that can then be used with the `@Inject` keyword.
-Currently there is only one container supported, the one accessed via the static `default` property.
-*/
 public class Container {
-	private var resolvers: [Resolver] = []
-
-	/**
-	Access to the singleton `Container` object.
-	*/
 	public static let `default` = Container()
-}
-
-public extension Container {
-	/**
-	This method is used to register `Component` types in the container. These can then be accessed with the `@Inject` keyword as instance properties.
-
-	Example usage:
-
-	```
-	protocol Settings: Component {
+		
+	private var resolvers: [ObjectIdentifier: Resolver] = [:]
+	
+	private func register(_ registration: Registration) {
+		resolvers[registration.identifier] = registration
 	}
-	struct SettingsComponent: Settings {
-	    init() { }
+	
+	public func register<C>(_ initialiser: @escaping @autoclosure () -> C) {
+		register(Registration(initialiser))
 	}
-
-	Container.default.register(SettingsComponent.self)
-
-	@Inject var comp: Settings
-	```
-
-	This way you can seperate the public api of your components from the actual implementation and swap them for mocks in unit tests.
-
-	- Parameters:
-	    - types: The types to register in the container. Must conform to the `Component` protocol.
-	*/
-	func register(_ types: Component.Type...) {
-		for type in types {			
-			let resolver = type.getResolver()
-			resolvers.append(resolver)
+		
+	public func register(@RegistrationBuilder _ registrations: () -> [Registration]) {
+		for registration in registrations() {
+			register(registration)
 		}
 	}
-
-	//	func unregister<T: Component>(_ type: T) {
-//		resolvers.removeAll { resolver in
-//			if let _: T = resolver.resolve() {
-//				return true
-//			} else {
-//				return false
-//			}
-//		}
-//	}
 	
-	/**
-	This method simply removes all registered resolvers. It's main purpose is to be used in unit tests where you need this specific behaviour to reset state.
-	*/
-	func unregisterAll() {
-		resolvers.removeAll()
-	}
 	
-	/**
-	This method provides direct resolution of registered dependencies, bypassing the `@Inject` property wrapper.
-	
-	Often you just register one Component for a given type, but the `Container` type allows you to register more than one component of the same type. With this method you can get all implementations of that type.
-	
-	- Returns: An array of the resolved dependencies of type `T`.
-	*/
-	func resolveDependencies<T>() -> [T] {
-		var resolvedDependencies: [T] = []
-		
-		for resolver in resolvers {
-			if let dependency: T = resolver.resolve() {
-				(dependency as? Component)?.onResolved()
-				resolvedDependencies.append(dependency)
+	public func resolve<C>() -> C? {
+		if let resolver = resolvers[ObjectIdentifier(C.self)] {
+			return resolver.resolve() as? C
+		} else {
+			let des = resolvers.values.reduce("") {
+				"\($0)\n\t- \(($1 as! Registration).description)"
 			}
+			print("No registration found for type \(C.self). Registered types: \(des)")
+			return nil
 		}
-		
-		return resolvedDependencies
 	}
 	
-	/**
-	This method provides direct resolution of a registered dependency, bypassing the `@Inject` property wrapper.
-	
-	Often you just register one Component for a given type, but the `Container` type allows you to register more than one component of the same type. With this method you can get the first implementation of that type.
-	Also this method does not crash if the dependency is not found, but rather returns an optional instead.
-	
-	- Returns: A initialised component of the resolved dependencies of type `T?`. returns `nil` if no such component is registered.
-	*/
-	func resolveDependency<T>() -> T? {
-		let resolvedDependencies: [T] = resolveDependencies()
-		return resolvedDependencies.first
+	public func unregisterAll() {
+		resolvers = [:]
 	}
-		
 }
-
-extension Container {
-	func resolve<T>() -> T {
-		let dependencies: [T] = resolveDependencies()
-		
-		guard let dependency = dependencies.first else {
-			fatalError("Could not find a component for '\(T.self)', registered components are: \(resolvers.map { $0 })")
-		}
-		
-		return dependency
-	}
-
-}
-
-
