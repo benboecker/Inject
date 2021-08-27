@@ -74,6 +74,8 @@ class DITests: XCTestCase {
 		XCTAssertFalse(settings.name.isEmpty)
 	}
 	
+	
+	
 	override func tearDown() {
 		super.tearDown()
 		

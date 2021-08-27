@@ -34,7 +34,11 @@ public class Container {
 	
 	public func resolve<C>() -> C? {
 		if let resolver = resolvers[ObjectIdentifier(C.self)] {
-			return resolver.resolve() as? C
+			let resolved = resolver.resolve() as? C
+			
+			(resolved as? ResolvingHandler)?.onResolved()
+			
+			return resolved
 		} else {
 			let des = resolvers.values.reduce("") {
 				"\($0)\n\t- \(($1 as! Registration).description)"

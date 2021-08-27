@@ -21,19 +21,21 @@ class Controller {
 
 
 
-
-
 protocol Settings {
 	var name: String { get }
 }
 
-final class SettingsComponent: Settings {
+final class SettingsComponent: Settings, ResolvingHandler {
 	
 	static let shared = SettingsComponent()
 	
 	required init() {}
 
 	var name: String = "\(Int.random(in: 0...10000))"
+	
+	func onResolved() {
+		print("I got called")
+	}
 }
 class SecondController {
 	@Inject var settings: Settings
