@@ -38,6 +38,13 @@ class DITests: XCTestCase {
 		let simpleController = SimpleController()
 		XCTAssertEqual(simpleController.simpleComponent.name, "Test")
 	}
+	
+	func testCanResolve() {
+		Container.default.register(Addition() as IntegerCalculation)
+		
+		XCTAssertTrue(Container.default.canResolve(IntegerCalculation.self))
+		XCTAssertFalse(Container.default.canResolve(Addition.self))
+	}
 
 	func testNested() {
 		let c = Container.default

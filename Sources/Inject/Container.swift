@@ -31,6 +31,9 @@ public class Container {
 		}
 	}
 	
+	public func canResolve<C>(_ type: C.Type) -> Bool {
+		resolvers[ObjectIdentifier(C.self)] != nil
+	}
 	
 	public func resolve<C>() -> C? {
 		if let resolver = resolvers[ObjectIdentifier(C.self)] {
