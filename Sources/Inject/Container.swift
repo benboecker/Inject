@@ -51,6 +51,16 @@ public class Container {
 		}
 	}
 	
+//	public func resolve<C>() -> [C] {
+//		var resolved: [C] = []
+//		
+//		for resolver in resolvers {
+//			
+//		}
+//		
+//		return resolved
+//	}
+	
 	public func unregisterAll() {
 		resolvers = [:]
 	}
