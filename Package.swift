@@ -1,29 +1,23 @@
-// swift-tools-version:5.6
+// swift-tools-version:5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    name: "Inject",
-    products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
-        .library(
-            name: "Inject",
-//			type: .dynamic,
-            targets: ["Inject"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(
-            name: "Inject",
-            dependencies: []),
-        .testTarget(
-            name: "InjectTests",
-            dependencies: ["Inject"]),
-    ]
+	name: "Inject",
+	platforms: [.iOS(.v15)],
+	products: [
+		.library(name: "Inject", targets: ["Inject"]),
+	],
+	dependencies: [],
+	targets: [
+		.target(
+			name: "Inject",
+			dependencies: []
+		),
+		.testTarget(
+			name: "InjectTests",
+			dependencies: ["Inject"]
+		),
+	]
 )

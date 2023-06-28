@@ -7,15 +7,14 @@
 //
 
 import Foundation
-
-
-
+import OSLog
 
 
 public class Container {
 	public static let `default` = Container()
-		
+	
 	private var resolvers: [ObjectIdentifier: Resolver] = [:]
+	private let logger = Logger(subsystem: "Inject", category: "Container")
 	
 	private func register(_ registration: Registration) {
 		resolvers[registration.identifier] = registration
@@ -46,7 +45,9 @@ public class Container {
 			let des = resolvers.values.reduce("") {
 				"\($0)\n\t- \(($1 as! Registration).description)"
 			}
-			print("No registration found for type \(C.self). Registered types: \(des)")
+			
+			let logString = "No registration found for type \(C.self). Registered types: \(des)"
+			logger.error("\(logString)")
 			return nil
 		}
 	}
